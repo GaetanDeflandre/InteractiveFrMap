@@ -1,16 +1,11 @@
 // GLOBALLY
 
-// declare the min and max variables that you need in parseInfo
-float minX, maxX;
-float minY, maxY;
-int totalCount;// total number of places 
-float minPopulation, maxPopulation; 
-float minSurface, maxSurface; 
-float minAltitude, maxAltitude;
-
 // declare the variables corresponding to the column ids for x and y
 final int X = 1;
 final int Y = 2;
+
+// Static class which content the min and max variables that you need in parseInfo
+CityMinMax minMaxStat;
 
 // the table in which the city data will be stored
 City[] cities;
@@ -20,19 +15,12 @@ void setup() {
   readData();
 }
 
-void draw(){ 
-  background(255);
-  for (int i = 0 ; i < totalCount ; i++) {
-    cities[i].drawCity();
-  }
-}
-
 void readData() {
   String[] lines = loadStrings("./villes.tsv");
   parseInfo(lines[0]); // read the header line
   
-  cities = new City[totalCount];
-  for (int i = 2 ; i < totalCount+2; ++i) {
+  cities = new City[minMaxStat.TOTAL_COUNT];
+  for (int i = 2 ; i < minMaxStat.TOTAL_COUNT+2; ++i) {
     String[] columns = split(lines[i], TAB);
     
     int postalcode = int (columns[0]);
@@ -43,7 +31,7 @@ void readData() {
     float surface = float (columns[6]);
     float altitude = float (columns[7]);
        
-    cities[i-2] = new City(postalcode, name, x, y, population, surface, altitude);
+    cities[i-2] = new City(postalcode, name, x, y, population, surface, altitude, minMaxStat);
   }
 }
 
@@ -52,15 +40,22 @@ void parseInfo(String line) {
   String infoString = line.substring(2);
   
   String[] infoPieces = split(infoString, ',');
-  totalCount = int(infoPieces[0]);
-  minX = float(infoPieces[1]);
-  maxX = float(infoPieces[2]);
-  minY = float(infoPieces[3]);
-  maxY = float(infoPieces[4]);
-  minPopulation = float(infoPieces[5]);
-  maxPopulation = float(infoPieces[6]);
-  minSurface = float(infoPieces[7]);
-  maxSurface = float(infoPieces[8]);
-  minAltitude = float(infoPieces[9]);
-  maxAltitude = float(infoPieces[10]);
+  minMaxStat.TOTAL_COUNT = int(infoPieces[0]);
+  minMaxStat.MIN_X = float(infoPieces[1]);
+  minMaxStat.MAX_X = float(infoPieces[2]);
+  minMaxStat.MIN_Y = float(infoPieces[3]);
+  minMaxStat.MAX_Y = float(infoPieces[4]);
+  minMaxStat.MIN_POP = float(infoPieces[5]);
+  minMaxStat.MAX_POP = float(infoPieces[6]);
+  minMaxStat.MIN_SURF = float(infoPieces[7]);
+  minMaxStat.MAX_SURF = float(infoPieces[8]);
+  minMaxStat.MIN_ALT = float(infoPieces[9]);
+  minMaxStat.MIN_ALT = float(infoPieces[10]);
+}
+
+void draw(){ 
+  background(255);
+  for (int i = 0 ; i < minMaxStat.TOTAL_COUNT ; i++) {
+    cities[i].drawCity();
+  }
 }

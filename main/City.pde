@@ -17,16 +17,18 @@ public class City {
   
 
   // CONSTANTES
+  // ==========
   public final static float MIN_DIAMETER = 2.0f;
   public final static float MAX_DIAMETER = 250.0f;
   
   
-  // CONSTRUCTEUR
   
+  // CONSTRUCTEUR
+  // ============
   /**
    * Allocation d'un objet ville.
    */
-  public City (int postalcode, String name, float x, float y, float population, float surface, float altitude){
+  public City (int postalcode, String name, float x, float y, float population, float surface, float altitude, CityMinMax minMaxStat){
     this.postalcode = postalcode;
     this.name = name;
     this.x = x;
@@ -35,19 +37,13 @@ public class City {
     this.surface = surface;
     this.altitude = altitude;
     
-    // Mise à jour minima et maxima
-    if (minMaxStat.MIN_POP == -1.0f || minMaxStat.MIN_POP > population){
-      minMaxStat.MIN_POP = population;
-    }
-    
-    if (minMaxStat.MAX_POP == -1.0f || minMaxStat.MAX_POP < population){
-      minMaxStat.MAX_POP = population;
-    }
-    
+    this.minMaxStat = minMaxStat;
   }
   
   
+  
   // GETTER
+  // ======
   public float getX(){
     return this.x; 
   }
@@ -84,14 +80,16 @@ public class City {
   }
   
   
+  
   // METHODES
+  // ========
   
   private float mapX(float x) {
-    return map(x, minX, maxX, 0, 800);
+    return map(x, minMaxStat.MIN_X, minMaxStat.MAX_X, 0, 800);
   }
   
   private float mapY(float y) {
-    return map(y, maxY, minY, 0, 800);
+    return map(y, minMaxStat.MAX_Y, minMaxStat.MIN_Y, 0, 800);
   }
   
   /**
@@ -109,6 +107,15 @@ public class City {
     return minI2 + ( lenI2*(valInI1-minI1) / lenI1 );
   }
   
+  
+
+  // FONCTION DRAW
+  // =============
+  
+  /**
+   * Nous dessinons les villes en fonction de leur nombre d'habitants 
+   * et leurs densitées
+   */
   public void drawCity(){
     
     if(getPopulation() == 0.0 || getDensity() == 0.0){
@@ -129,9 +136,11 @@ public class City {
     */
     float popDiameter = interpolateFromI1ToI2(getPopulation(), minMaxStat.MIN_POP, minMaxStat.MAX_POP, MIN_DIAMETER, MAX_DIAMETER);
     
-    //colorMode(HSB, 255);
-    color densColor = color(0, 0, 255);
-    float value = hue(densColor);
+    colorMode(HSB, 360, 100, 100);
+    color densColor = color(270, 100, 80);
+    //float value = hue(densColor);
+    
+    //println(value);
     
     fill(densColor);
     ellipse(posX, posY, int(popDiameter), int(popDiameter));

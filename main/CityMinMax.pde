@@ -5,7 +5,18 @@
 public static class CityMinMax {
   
   // CLASS ATTRIBUTES
-  public static float MIN_POP = -1.0f;
-  public static float MAX_POP = -1.0f;
+  public static int TOTAL_COUNT;
+  
+  public static float MIN_X;
+  public static float MAX_X;
+  public static float MIN_Y;
+  public static float MAX_Y;
+  
+  public static float MIN_POP;
+  public static float MAX_POP;
+  public static float MIN_SURF;
+  public static float MAX_SURF;
+  public static float MIN_ALT;
+  public static float MAX_ALT;
   
 }
