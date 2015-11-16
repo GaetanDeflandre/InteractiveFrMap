@@ -33,6 +33,7 @@ void readData() {
        
     cities[i-2] = new City(postalcode, name, x, y, population, surface, altitude, minMaxStat);
   }
+  println("Density Max: " + minMaxStat.MAX_DENS);
 }
 
 void parseInfo(String line) { 

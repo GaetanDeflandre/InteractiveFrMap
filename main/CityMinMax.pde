@@ -18,5 +18,7 @@ public static class CityMinMax {
   public static float MAX_SURF;
   public static float MIN_ALT;
   public static float MAX_ALT;
+  public static float MIN_DENS = -1;
+  public static float MAX_DENS = -1;
   
 }

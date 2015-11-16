@@ -8,6 +8,7 @@ public class City {
   private float population;
   private float surface;
   private float altitude;
+  private float density;
   
   /**
    * Classe static, contenant les informations sur 
@@ -20,6 +21,8 @@ public class City {
   // ==========
   public final static float MIN_DIAMETER = 2.0f;
   public final static float MAX_DIAMETER = 250.0f;
+  public final static float MIN_LUM = 25.0f;
+  public final static float MAX_LUM = 175.0f;
   
   
   
@@ -37,7 +40,25 @@ public class City {
     this.surface = surface;
     this.altitude = altitude;
     
+    this.density = computeDensity();
+    
+    if (name.equals("Paris")){
+      println("Density Paris: " + this.density); 
+    }
+    
     this.minMaxStat = minMaxStat;
+    
+    if (minMaxStat.MIN_DENS == -1){
+      minMaxStat.MIN_DENS = this.getDensity();
+    } else if (minMaxStat.MIN_DENS > this.getDensity()){
+      minMaxStat.MIN_DENS = this.getDensity();
+    }
+    
+    if (minMaxStat.MAX_DENS == -1){
+      minMaxStat.MAX_DENS = this.getDensity();
+    } else if(minMaxStat.MAX_DENS < this.getDensity()) {
+      minMaxStat.MAX_DENS = this.getDensity();
+    }
   }
   
   
@@ -73,10 +94,14 @@ public class City {
   }
   
   public float getDensity(){
+    return this.density;
+  }
+  
+  public float computeDensity(){
     if(this.getSurface() <= 0.0){
       return 0.0;
     }
-    return  this.getPopulation() / this.getSurface();
+    return this.getPopulation() / this.getSurface();
   }
   
   
@@ -135,12 +160,25 @@ public class City {
      - on interpole pour convertir un nombre d'habitant en diametre.
     */
     float popDiameter = interpolateFromI1ToI2(getPopulation(), minMaxStat.MIN_POP, minMaxStat.MAX_POP, MIN_DIAMETER, MAX_DIAMETER);
+    float lumValue = interpolateFromI1ToI2(getDensity(), minMaxStat.MIN_DENS, minMaxStat.MAX_DENS, MIN_LUM, MAX_LUM);
     
+    if(name.equals("Paris")){
+      println("Lum Paris: " + lumValue); 
+    }
+    
+    int satur;
+    int bright;
+    
+    if (lumValue <= 100.0f){
+      satur = int (lumValue);
+      bright = 100;
+    } else {
+      satur = 100;
+      bright = int (lumValue) - 100;
+    }
+
     colorMode(HSB, 360, 100, 100);
-    color densColor = color(270, 100, 80);
-    //float value = hue(densColor);
-    
-    //println(value);
+    color densColor = color(200, satur, bright);
     
     fill(densColor);
     ellipse(posX, posY, int(popDiameter), int(popDiameter));
