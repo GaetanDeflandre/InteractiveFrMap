@@ -56,8 +56,8 @@ public class Caption {
     ellipse(x+margin+240, margin+130, 95, 95);
     
     fill(0);
-    text("Population density (persons/km^2) :", x+margin, margin+200); //<>//
-    setGradient(x+margin, margin+210, 250, 20, color(191,234,255), color(0,88,132), X_AXIS);
+    text("Population density (persons/km^2) :", x+margin, margin+230);  //<>//
+    setGradient(x+margin, margin+240, 250, 20, color(191,234,255), color(0,88,132), X_AXIS);
     
     text("Minimum population to display (persons) :", x+margin, margin+340);
     text("Maximum population to display (persons) :", x+margin, margin+440);
@@ -68,8 +68,8 @@ public class Caption {
     text("450 000", x+margin+120, margin+170);
     text("800 000", x+margin+220, margin+130);
     
-    text("300", x+margin-10, margin+240);
-    text("2 400", x+margin+240, margin+240);
+    text("300", x+margin-10, margin+270);
+    text("2 400", x+margin+240, margin+270);
   }
   
   public void describe(City c){
