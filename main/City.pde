@@ -10,6 +10,9 @@ public class City {
   private float altitude;
   private float density;
   
+  private float radius;
+
+  
   /**
    * Classe static, contenant les informations sur 
    * les minima et maxima des villes instanciées
@@ -104,6 +107,10 @@ public class City {
     return this.getPopulation() / this.getSurface();
   }
   
+  public float getRadius(){
+    return radius;
+  }
+  
   
   
   // METHODES
@@ -141,10 +148,20 @@ public class City {
    * Nous dessinons les villes en fonction de leur nombre d'habitants 
    * et leurs densitées
    */
-  public void drawCity(){
+  public void drawCity(boolean isPicked){
     
     if(getPopulation() == 0.0 || getDensity() == 0.0){
       // check limit cases
+      return;
+    }
+    
+    if(int(getPopulation()) < minMaxStat.MIN_POP_TO_DISPLAY){
+      // not display low population city 
+      return;
+    }
+    
+    if(int(getPopulation()) > minMaxStat.MAX_POP_TO_DISPLAY){
+      // not display hight population city 
       return;
     }
     
@@ -162,9 +179,7 @@ public class City {
     float popDiameter = interpolateFromI1ToI2(getPopulation(), minMaxStat.MIN_POP, minMaxStat.MAX_POP, MIN_DIAMETER, MAX_DIAMETER);
     float lumValue = interpolateFromI1ToI2(getDensity(), minMaxStat.MIN_DENS, minMaxStat.MAX_DENS, MIN_LUM, MAX_LUM);
     
-    if(name.equals("Paris")){
-      println("Lum Paris: " + lumValue); 
-    }
+    this.radius = popDiameter / 2.0;
     
     int satur;
     int bright;
@@ -176,11 +191,27 @@ public class City {
       satur = 100;
       bright = int (lumValue) - 100;
     }
+    
+    if (getPopulation() > 700000 && getPopulation() < 1000000){
+      println("pop:" + getPopulation() + ", popSize:" + popDiameter);
+    }
 
     colorMode(HSB, 360, 100, 100);
     color densColor = color(200, satur, bright);
     
+    colorMode(RGB, 255, 255, 255);
+    if (isPicked){
+      stroke(255,0,0);
+    } else {
+      stroke(0,0,0);
+    }
+    
     fill(densColor);
     ellipse(posX, posY, int(popDiameter), int(popDiameter));
+    
+  }
+  
+  public boolean contains(int px, int py){
+    return dist(mapX(getX()), mapY(getY()), px, py) <= int(this.radius) + 1;
   }
 }

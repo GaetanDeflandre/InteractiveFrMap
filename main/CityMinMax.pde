@@ -21,4 +21,7 @@ public static class CityMinMax {
   public static float MIN_DENS = -1;
   public static float MAX_DENS = -1;
   
+  public static int MIN_POP_TO_DISPLAY;
+  public static int MAX_POP_TO_DISPLAY;
+  
 }

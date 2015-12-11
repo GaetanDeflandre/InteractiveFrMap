@@ -1,8 +1,17 @@
+import controlP5.*;
+
 // GLOBALLY
+
+// Controller
+ControlP5 controller;
 
 // declare the variables corresponding to the column ids for x and y
 final int X = 1;
 final int Y = 2;
+
+// Caption
+final int CAP_WIDTH = 400;
+Caption caption;
 
 // Static class which content the min and max variables that you need in parseInfo
 CityMinMax minMaxStat;
@@ -11,7 +20,11 @@ CityMinMax minMaxStat;
 City[] cities;
 
 void setup() { 
-  size(800,800);
+  size(1200,800);
+  
+  controller =  new ControlP5(this);
+  caption = new Caption(800, 0, CAP_WIDTH, 800, controller);
+  
   readData();
 }
 
@@ -52,11 +65,40 @@ void parseInfo(String line) {
   minMaxStat.MAX_SURF = float(infoPieces[8]);
   minMaxStat.MIN_ALT = float(infoPieces[9]);
   minMaxStat.MIN_ALT = float(infoPieces[10]);
+  
+  minMaxStat.MIN_POP_TO_DISPLAY = caption.getMinPopValue();
+  minMaxStat.MAX_POP_TO_DISPLAY = caption.getMaxPopValue();
 }
 
 void draw(){ 
-  background(255);
+  colorMode(RGB, 255, 255, 255);
+  background(255, 255, 255);
+  
+  caption.draw();
+  minMaxStat.MIN_POP_TO_DISPLAY = caption.getMinPopValue();
+  minMaxStat.MAX_POP_TO_DISPLAY = caption.getMaxPopValue();
+  
+  City pickedCity = pick(mouseX, mouseY);
+  
   for (int i = 0 ; i < minMaxStat.TOTAL_COUNT ; i++) {
-    cities[i].drawCity();
+    boolean isPicked = false;
+    
+    if (pickedCity != null){
+      isPicked = pickedCity.getName().equals(cities[i].getName());
+      caption.describe(pickedCity);
+    }
+    
+    cities[i].drawCity(isPicked);
   }
+}
+
+City pick(int px, int py){
+  for (int i = minMaxStat.TOTAL_COUNT-1 ; i >= 0 ; i--){
+    if (cities[i].contains(px, py) && 
+        cities[i].getPopulation() > minMaxStat.MIN_POP_TO_DISPLAY && 
+        cities[i].getPopulation() < minMaxStat.MAX_POP_TO_DISPLAY){
+      return cities[i];
+    }
+  }
+  return null;
 }
