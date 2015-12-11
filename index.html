@@ -23,102 +23,104 @@
 </head>
 
 <body>
-  <h1>NIHM - Interactive map of France</h1>
 
-  <h2>Sources et application</h2>
-  <ul>
-    <li><a href="https://github.com/GaetanDeflandre/InteractiveFrMap">Lien vers le dépot GitHub.</a><br></li>
-  </ul>
+  <div class="container">
+    <h1>NIHM - Interactive map of France</h1>
 
-  <h2>Les variables rétiniennes</h2>
+    <h2>Sources et application</h2>
+    <ul>
+      <li><a href="https://github.com/GaetanDeflandre/InteractiveFrMap">Lien vers le dépot GitHub.</a><br></li>
+    </ul>
 
-  Pour cette carte de France, j'ai décidé de représenter les informations
-  suivantes :
-  <ul>
-    <li>La position (coordonnée de la ville)</li>
-    <li>La population (nombre d'habitants).</li>
-    <li>La densité (population / surface).</li>
-  </ul>
+    <h2>Les variables rétiniennes</h2>
 
-  La taille des cercles et leurs couleurs ont été choisit, en essayant de
-  respecter le cours de NIHM.<br>
+    Pour cette carte de France, j'ai décidé de représenter les informations
+    suivantes :
+    <ul>
+      <li>La position (coordonnée de la ville)</li>
+      <li>La population (nombre d'habitants).</li>
+      <li>La densité (population / surface).</li>
+    </ul>
 
-  <h3>La population</h3>
+    La taille des cercles et leurs couleurs ont été choisit, en essayant de
+    respecter le cours de NIHM.<br>
 
-  <p>
-    L'information de population est quantitative. Pour la représentation des
-    données quantitatives, la position est une variable recommandée. Or nos
-    villes ont déjà une position à respecter.<br>
+    <h3>La population</h3>
 
-    La carte de France est très encombrée et ne permet pas de représenter les
-    villes par des traits dont la longueur ou l'angle change.<br>
+    <p>
+      L'information de population est quantitative. Pour la représentation des
+      données quantitatives, la position est une variable recommandée. Or nos
+      villes ont déjà une position à respecter.<br>
 
-    Ainsi la meilleure solution, pour représenter les villes, est le cercle dont
-    l'aire change en fonction du nombre d'habitants.<br>
-  </p>
+      La carte de France est très encombrée et ne permet pas de représenter les
+      villes par des traits dont la longueur ou l'angle change.<br>
 
-  <p>
-    Pour éviter de biaiser l'utilisateur, la proportion entre le nombre
-    d'habitants et l'aire du cercle est respectée. Avec une précision
-    arrondie au pixel.<br>
+      Ainsi la meilleure solution, pour représenter les villes, est le cercle dont
+      l'aire change en fonction du nombre d'habitants.<br>
+    </p>
 
-    Dans cet objectif, aucun logarithme n'est utilisé. L'application
-    dispose d'une taille de cercle minimale et maximale pour la ville la
-    moins peuplée et la ville la plus peuplée. Mais, il n'y a pas de taille
-    maximale qui les villes au-dessus d'un certain seuil.<br>
+    <p>
+      Pour éviter de biaiser l'utilisateur, la proportion entre le nombre
+      d'habitants et l'aire du cercle est respectée. Avec une précision
+      arrondie au pixel.<br>
 
-    Par exemple, Paris est une ville avec un nombre très important d'habitants,
-    donc la capitale apparaîtra grande dans l'application.<br>
-  </p>
+      Dans cet objectif, aucun logarithme n'est utilisé. L'application
+      dispose d'une taille de cercle minimale et maximale pour la ville la
+      moins peuplée et la ville la plus peuplée. Mais, il n'y a pas de taille
+      maximale qui les villes au-dessus d'un certain seuil.<br>
 
-  <p>
-    Des fonctions d'interpolation linéaire sont utilisées pour conserver la
-    proportion.<br>
-  </p>
+      Par exemple, Paris est une ville avec un nombre très important d'habitants,
+      donc la capitale apparaîtra grande dans l'application.<br>
+    </p>
 
-
-  <h3>La densité</h3>
-
-  <p>
-    Pour la densité, la variable rétinienne qui convient est la densité de la
-    couleur. Dans notre cas, utiliser les densités de couleur est avantageux
-    car il est facile de colorier l'intérieur d'un cercle et cela reste
-    très compréhensible pour l'utilisateur.<br>
-  </p>
-
-  <p>
-    Dans processing, il est possible d'obtenir les couleurs avec l'espace
-    colorimétrique HSB, or cet espace ne permet pas d'obtenir tous les
-    tons d'une couleur. La luminance de l'espace colorimétrique HSL est plus
-    adapter aux variations de densité. Ainsi, un calcul de conversion est
-    effectué dans l'application.
-
-    Il est important de décrit la densité avec le maximum de tons possible,
-    car l'utilisateur pourra distinguer plus facilement les couleurs.
-  </p>
-
-  <h3>Interactions souris</h3>
-
-  <p>
-    Il est possible de pointer les villes avec la souris pour obtenir plus
-    d'informations. Ces informations sont affichées dans la légende.<br>
-  </p>
-
-  <h3>Les sliders</h3>
-
-  <p>
-    L'application dispose de deux sliders permettant de choisir les villes à
-    afficher en fonction d'un nombre minimum d'habitants ou d'un nombre
-    maximum d'habitants.<br>
-
-    La bibliothèque <b>ControlP5</b> est utilisée.<br>
-  </p>
+    <p>
+      Des fonctions d'interpolation linéaire sont utilisées pour conserver la
+      proportion.<br>
+    </p>
 
 
-  <br>
+    <h3>La densité</h3>
 
-  <img src="img/map_of_france.png" width="1000" alt="Carte de France" />
+    <p>
+      Pour la densité, la variable rétinienne qui convient est la densité de la
+      couleur. Dans notre cas, utiliser les densités de couleur est avantageux
+      car il est facile de colorier l'intérieur d'un cercle et cela reste
+      très compréhensible pour l'utilisateur.<br>
+    </p>
 
+    <p>
+      Dans processing, il est possible d'obtenir les couleurs avec l'espace
+      colorimétrique HSB, or cet espace ne permet pas d'obtenir tous les
+      tons d'une couleur. La luminance de l'espace colorimétrique HSL est plus
+      adapter aux variations de densité. Ainsi, un calcul de conversion est
+      effectué dans l'application.
+
+      Il est important de décrit la densité avec le maximum de tons possible,
+      car l'utilisateur pourra distinguer plus facilement les couleurs.
+    </p>
+
+    <h3>Interactions souris</h3>
+
+    <p>
+      Il est possible de pointer les villes avec la souris pour obtenir plus
+      d'informations. Ces informations sont affichées dans la légende.<br>
+    </p>
+
+    <h3>Les sliders</h3>
+
+    <p>
+      L'application dispose de deux sliders permettant de choisir les villes à
+      afficher en fonction d'un nombre minimum d'habitants ou d'un nombre
+      maximum d'habitants.<br>
+
+      La bibliothèque <b>ControlP5</b> est utilisée.<br>
+    </p>
+
+
+    <br>
+
+    <img src="img/map_of_france.png" width="1000" alt="Carte de France" />
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
