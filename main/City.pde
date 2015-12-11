@@ -191,10 +191,6 @@ public class City {
       satur = 100;
       bright = int (lumValue) - 100;
     }
-    
-    if (getPopulation() > 700000 && getPopulation() < 1000000){
-      println("pop:" + getPopulation() + ", popSize:" + popDiameter);
-    }
 
     colorMode(HSB, 360, 100, 100);
     color densColor = color(200, satur, bright);
